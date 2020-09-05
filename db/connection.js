@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
     hotst: 'localhost',
     user: 'root',
     password: '',
-    database: ''
+    database: 'starwars_db'
 });
 
 connection.connect();
