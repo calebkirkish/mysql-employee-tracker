@@ -5,43 +5,27 @@ CREATE DATABASE starwars_db;
 USE starwars_db;
 
 CREATE TABLE allegiance (
-    id INT AUTO_INCREMENT,
-    name VARCHAR(20),
-    PRIMARY KEY (id)
-)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) UNIQUE NOT NULL
+    );
 
-CREATE TABLE role (
-    id INT AUTO_INCREMENT,
-    role_name VARCHAR(30),
-    midicount INT(10),
-    allegiance_id INT,
-    PRIMARY KEY (id)
-    FOREIGN KEY (allegiance_id)
-)
+CREATE TABLE roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(30)UNIQUE NOT NULL,
+    midicount INT(10) NOT NULL,
+    allegiance_id INT NOT NULL,
+    INDEX allegiance_id(allegiance_id),
+    CONSTRAINT fk_allegiance FOREIGN KEY (allegiance_id) REFERENCES allegiance(id) ON DELETE CASCADE
+);
 
 CREATE TABLE characters (
-    id INT AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    allegiance_id,
-    is_jedi BOOLEAN NOT NULL,
-    role_id INT,
+    force_sensitive BOOLEAN NOT NULL,
+    role_id INT not null,
+    INDEX role_id(role_id),
+    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
     leader_id INT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (role_id) REFERENCES roles(id),
-    FOREIGN KEY (leader_id) REFERENCES characters(id)
-)
-
-INSERT INTO allegiance(name)
-VALUES 
-    ('dark side'),
-    ('light side')
-
-INSERT into role 
-    (role_name, midicount, allegiance_id)
-
-VALUES
-    ('Jedi Knight', 15000, 2)
-
-INSERT INTO characters (name, allegiance_id, role_id, leader_id,is_jedi)
-VALUES ('Luke Skywalker', 2, 1, 1)
-
+    INDEX leader_id (leader_id),
+    CONSTRAINT fk_leader FOREIGN KEY (leader_id) REFERENCES characters(id) ON DELETE SET NULL
+);

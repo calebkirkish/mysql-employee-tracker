@@ -7,21 +7,26 @@ class DB {
         this.connection = connection;
     }
 
-    viewAllTitles() {
+    viewAllCharacters() {
         return this.connection.query(
             `
             SELECT
-                title.id,
-                title.name AS Title,
-                title.salary AS Salary,
-                house.name AS House
+                characters.id,
+                characters.name AS Characters,
+                allegiance.name AS Allegiance,
+                roles.role_name AS Role,
+                roles.midicount AS Midicount
             FROM
-                title
+                characters
             LEFT JOIN
-                house ON title.house_id = house.id
+                roles ON characters.role_id = roles.id
+            LEFT JOIN
+                allegiance ON roles.allegiance_id = allegiance.id
             ORDER BY
-                title.id;
+                characters.id;
             `
         );
     }
 }
+
+module.exports = new DB(connection);

@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
     hotst: 'localhost',
     user: 'root',
-    password: '',
+    password: 'password',
     database: 'starwars_db'
 });
 
