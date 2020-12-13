@@ -6,12 +6,12 @@ USE starwars_db;
 
 CREATE TABLE allegiance (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30) UNIQUE NOT NULL
+    name VARCHAR(30) unique NOT NULL
     );
 
 CREATE TABLE roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    role_name VARCHAR(30)UNIQUE NOT NULL,
+    role_name VARCHAR(30) UNIQUE NOT NULL,
     midicount INT(10) NOT NULL,
     allegiance_id INT NOT NULL,
     INDEX allegiance_id(allegiance_id),
